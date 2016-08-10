@@ -7,6 +7,9 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import tbc.game.Jewel;
+import tbc.packets.Packet;
+
 public class ClientInstance implements Runnable{
 
 	
@@ -16,10 +19,12 @@ public class ClientInstance implements Runnable{
 	ObjectInputStream ois;
 	int id;
 	boolean connected = true;
+	Jewel game;
 	
-	public ClientInstance(JewelServer server, Socket cliSoc) {
+	public ClientInstance(JewelServer server, Jewel game, Socket cliSoc) {
 		this.server = server;
 		soc = cliSoc;
+		this.game = game;
 	}
 	
 	@Override
@@ -27,26 +32,33 @@ public class ClientInstance implements Runnable{
 		try{
 			init();
 			while(connected && server.running){
-				
-			}
-			
-			
+				proccesPackets();
+			}			
 		}catch(IOException e){
 			e.printStackTrace();
 			System.err.println("Client failed! ");
 		}
 	}
 	
-	private void init() throws IOException{ 
-		
+	private void init() throws IOException{ 		
 		oos = new ObjectOutputStream(soc.getOutputStream());
-		ois = new ObjectInputStream(soc.getInputStream());
-		
+		ois = new ObjectInputStream(soc.getInputStream());		
 		server.addClient(this);
 	}
 	
 	void setID(int id){
 		this.id = id;
+	}
+	
+	void proccesPackets(){
+		try {
+			Packet in = (Packet) ois.readObject();
+			in.onServer();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
