@@ -7,6 +7,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import tbc.packets.Packet;
+
 public class NetworkStuff {
 	ObjectInputStream is;
 	ObjectOutputStream os;
@@ -20,6 +22,7 @@ public class NetworkStuff {
 		e.printStackTrace();
 	}	
 	}
+	
 	
 	public void init(InetAddress address, int port) {
 		try {
@@ -40,7 +43,29 @@ public class NetworkStuff {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 	}
+
+	public synchronized void sendPacket(Packet p){
+		try {
+			os.writeObject(p);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("couldnt sent packet");
+		}
+	}
+	public void processPackets(){
+		try {
+			Packet in = (Packet) is.readObject();
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 
 }
