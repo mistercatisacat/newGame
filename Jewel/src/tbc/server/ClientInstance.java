@@ -53,7 +53,7 @@ public class ClientInstance implements Runnable{
 	void proccesPackets(){
 		try {
 			Packet in = (Packet) ois.readObject();
-			in.onServer();
+			in.onServer(server,game);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
