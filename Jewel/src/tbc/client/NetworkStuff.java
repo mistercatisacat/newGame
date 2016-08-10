@@ -7,8 +7,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import javax.swing.JOptionPane;
-
 public class NetworkStuff {
 	ObjectInputStream is;
 	ObjectOutputStream os;
