@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 
 import tbc.game.Jewel;
 import tbc.packets.Packet;
+import tbc.packets.TestPacket;
 
 public class NetworkStuff {
 	ObjectInputStream is;
@@ -45,6 +46,8 @@ public class NetworkStuff {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		TestPacket cat = new TestPacket();
+		sendPacket(cat);
 		
 	}
 
