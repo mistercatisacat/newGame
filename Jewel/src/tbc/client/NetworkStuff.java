@@ -18,18 +18,15 @@ public class NetworkStuff {
 
 	Socket crox;
 	public NetworkStuff(){
-	try {
-		init(InetAddress.getByName("127.0.0.1"),9999);
-	} catch (UnknownHostException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}	
+
+		init("localhost",9999);
+		
 	}
 	
 	
-	public void init(InetAddress address, int port) {
+	public void init(String string, int port) {
 		try {
-		crox = new Socket(address,port);
+		crox = new Socket(string,port);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,13 +51,15 @@ public class NetworkStuff {
 	public synchronized void sendPacket(Packet p){
 		try {
 			os.writeObject(p);
-		} catch (IOException e) {
+			} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("couldnt sent packet");
+			System.exit(-1);
 		}
 	}
 	public void processPackets(){
 		try {
+			System.out.println("stuff...");
 			Packet in = (Packet) is.readObject();
 			in.onClient(game);
 			
@@ -71,7 +70,7 @@ public class NetworkStuff {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
 	
+	}
 
 }

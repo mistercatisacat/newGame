@@ -22,10 +22,13 @@ public class JewelServer {
 	public JewelServer() {
 		game = new Jewel();
 		try {
+			System.out.println("starting...");
 			server = new ServerSocket(9999);
 			while(running){
+				System.out.println("wating for client");
 				Socket cliSoc = server.accept();
 				ClientInstance ci = new ClientInstance(this,game, cliSoc);
+				System.out.println("starting thread");
 				(new Thread(ci)).start();
 			}
 		} catch (IOException e) {			
