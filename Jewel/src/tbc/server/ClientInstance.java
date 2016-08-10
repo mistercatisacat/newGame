@@ -7,6 +7,8 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.sql.rowset.spi.SyncResolver;
+
 import tbc.game.Jewel;
 import tbc.packets.Packet;
 
@@ -60,5 +62,12 @@ public class ClientInstance implements Runnable{
 			e.printStackTrace();
 		}
 	}
-
+	
+	public synchronized void sendPacket(Packet p){
+		try {
+			oos.writeObject(p);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
