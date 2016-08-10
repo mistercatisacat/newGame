@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.HashMap;
 
 import tbc.game.Jewel;
+import tbc.packets.Packet;
 
 public class JewelServer {
 
@@ -46,5 +47,13 @@ public class JewelServer {
 			id++;
 		}
 		return id;
+	}
+	
+	public void sendPacket(int clientID,Packet p){
+		ClientInstance ci;
+		synchronized (this) {
+			ci = clients.get(clientID);
+		}
+		ci.sendPacket(p);
 	}
 }
