@@ -7,11 +7,13 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import tbc.game.Jewel;
 import tbc.packets.Packet;
 
 public class NetworkStuff {
 	ObjectInputStream is;
 	ObjectOutputStream os;
+	Jewel game;
 
 	Socket crox;
 	public NetworkStuff(){
@@ -57,6 +59,7 @@ public class NetworkStuff {
 	public void processPackets(){
 		try {
 			Packet in = (Packet) is.readObject();
+			in.onClient(game);
 			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
