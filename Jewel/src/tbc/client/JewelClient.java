@@ -5,10 +5,13 @@ import tbc.game.Jewel;
 public class JewelClient {
 	static boolean runnung = true;
 	public static void main(String args[]) {
-		NetworkStuff net = new NetworkStuff();
-		while(runnung){
-			net.processPackets();
-		}
-		(new Jewel()).loop();
+		JewelClient client = new JewelClient(new Jewel());
+	}
+	
+	public JewelClient(Jewel game){
+	  NetworkStuff net = new NetworkStuff();
+      Thread t = new Thread(net);
+      t.start();
+      (new Jewel()).loop();
 	}
 }
