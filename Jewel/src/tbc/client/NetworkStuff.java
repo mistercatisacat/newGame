@@ -15,6 +15,7 @@ public class NetworkStuff implements Runnable{
   ObjectInputStream is;
   ObjectOutputStream os;
   Jewel game;
+  boolean stop = false;
 
   Socket crox;
   public NetworkStuff(){
@@ -35,19 +36,18 @@ public class NetworkStuff implements Runnable{
       crox = new Socket(string,port);
     } catch (IOException e) {
       // TODO Auto-generated catch block
-      e.printStackTrace();
+    	System.out.println("couldnt connect to server");
     }
     try {
       is = new ObjectInputStream(crox.getInputStream());
     } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    	System.out.println("couldnt connect to server");
+    	}
     try {
       os = new ObjectOutputStream(crox.getOutputStream());
     } catch (IOException e) {
       // TODO Auto-generated catch block
-      e.printStackTrace();
+    	System.out.println("couldnt connect to server");
     }
     TestPacket cat = new TestPacket();
     sendPacket(cat);
@@ -62,23 +62,28 @@ public class NetworkStuff implements Runnable{
       System.out.println("couldnt sent packet");
       System.exit(-1);
     }
+  
+  }
+  public void stop(){
+	  stop = true;
   }
   public void processPackets(){
+	  while(!stop){
     try {
-      System.out.println("stuff...");
       Packet in = (Packet) is.readObject();
       in.onClient(game);
 
     } catch (ClassNotFoundException e) {
       // TODO Auto-generated catch block
-      e.printStackTrace();
+    	System.out.println("couldnt connect to server");
     } catch (IOException e) {
       // TODO Auto-generated catch block
-      e.printStackTrace();
+    	System.out.println("couldnt connect to server");
     }
+	  }
 
   }
-
+	
 
 
 
