@@ -1,0 +1,18 @@
+package tbc.game;
+
+import tbc.client.NetworkStuff;
+
+public class Jewel {
+	boolean runnung = true;
+	NetworkStuff net;
+	public Jewel(){
+		net = new NetworkStuff();
+	}
+	
+	public void loop(){
+		while(runnung){
+			net.processPackets();
+		}
+	}
+	
+}

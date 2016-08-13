@@ -1,0 +1,8 @@
+package tbc.game.entities;
+
+public interface Entity {
+	public void setx();
+	public void sety();
+
+	
+}

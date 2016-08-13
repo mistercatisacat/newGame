@@ -1,26 +1,14 @@
 package tbc.client;
 
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
+
 import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.BufferedImageUtil;
 
@@ -46,7 +34,7 @@ public class JewelClient extends StateBasedGame{
 	public static void main(String args[]) {
 	//start thread to receive packets at all time
 	world = new World();
-
+	
 	//startNetThread();	
 	  try {
           AppGameContainer app = new AppGameContainer(new JewelClient("My Game v" + VERSION));
@@ -57,7 +45,10 @@ public class JewelClient extends StateBasedGame{
       } catch(SlickException e) {
           e.printStackTrace();
       }
-		load = new ImageLoader("/home/carl/best/Jewel/assets/");
+		
+	  while(runnung = true){
+		  
+	  }
 	net.stop();
 	System.exit(0);
 }

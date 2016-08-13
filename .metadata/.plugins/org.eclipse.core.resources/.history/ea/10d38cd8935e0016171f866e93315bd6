@@ -1,0 +1,9 @@
+package tbc.game;
+
+import tbc.client.NetworkStuff;
+
+public class Jewel {
+	public Jewel(){
+		
+	}
+}

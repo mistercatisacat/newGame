@@ -1,0 +1,21 @@
+package tbc.client;
+
+import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.awt.Label;
+
+import javax.swing.JFrame;
+
+public class Window {
+	
+	public Window(){
+	Label emptyLabel = new Label();
+	JFrame frame = new JFrame("test fram");
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	emptyLabel.setSize(100, 100);
+	frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
+	frame.pack();
+	frame.setVisible(true);
+	}
+
+}

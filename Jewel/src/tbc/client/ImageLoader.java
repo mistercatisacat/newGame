@@ -18,6 +18,7 @@ public class ImageLoader {
 	public ImageLoader(String imagesDirectory) {
 		File dir = new File(imagesDirectory);
 		String[] imgs = dir.list();
+		System.out.println("does " + imagesDirectory + " exist? "+dir.exists());
 		for (int i = 0; i < imgs.length; i++) {
 			System.out.println("loading: " + imgs[i]);
 			try {

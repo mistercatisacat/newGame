@@ -9,7 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Test extends BasicGameState{
 
-	ImageLoader load = new ImageLoader("/home/carl/best/Jewel/assets/");
+	ImageLoader load = new ImageLoader("assets/");
 	Image test;
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -19,7 +19,7 @@ public class Test extends BasicGameState{
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		test = load.getImage("checker_small.gif");
+		test = load.getImage("checker_small");
 		test.draw(0, 0);
 		
 	}
