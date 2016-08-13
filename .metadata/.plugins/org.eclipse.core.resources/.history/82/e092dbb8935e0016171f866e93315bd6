@@ -1,9 +1,0 @@
-package tbc.game;
-
-import tbc.client.NetworkStuff;
-
-public class Jewel {
-	public static void main( String	args[]){
-		NetworkStuff stuff = new NetworkStuff();
-	}
-}

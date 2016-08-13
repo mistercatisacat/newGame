@@ -1,7 +1,0 @@
-package tbc.game;
-
-import java.util.ArrayList;
-
-public class World {
-	ArrayList entityList<Entity>
-}
