@@ -14,6 +14,7 @@ import org.newdawn.slick.util.BufferedImageUtil;
 
 import tbc.game.Jewel;
 import tbc.game.World;
+import tbc.game.states.MainMenu;
 
 public class JewelClient extends StateBasedGame{
 	public JewelClient(String title) {
@@ -37,7 +38,7 @@ public class JewelClient extends StateBasedGame{
 	
 	//startNetThread();	
 	  try {
-          AppGameContainer app = new AppGameContainer(new JewelClient("My Game v" + VERSION));
+          AppGameContainer app = new AppGameContainer(new JewelClient("Jewel v" + VERSION));
           app.setDisplayMode(WIDTH, HEIGHT, false);
           app.setTargetFrameRate(FPS);
           app.setShowFPS(true);
@@ -63,6 +64,6 @@ public class JewelClient extends StateBasedGame{
 
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException {
-		this.addState(new Test());
+		this.addState(new MainMenu());
 	}
 	}
