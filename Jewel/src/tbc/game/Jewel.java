@@ -15,6 +15,7 @@ import tbc.client.NetworkStuff;
 public class Jewel {
 	boolean runnung = true;
 	public Jewel(){
+	  
 	}
 	
 }
