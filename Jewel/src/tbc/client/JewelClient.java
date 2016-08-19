@@ -47,21 +47,12 @@ public class JewelClient extends StateBasedGame {
     } catch (SlickException e) {
       e.printStackTrace();
     }
-
-    while (runnung = true) {
-
-    }
+    
     net.stop();
     System.exit(0);
   }
 
-  public static void startNetThread() {
-    net = new NetworkStuff();
-    t = new Thread(net);
-    t.start();
 
-
-  }
 
   @Override
   public void initStatesList(GameContainer arg0) throws SlickException {

@@ -18,9 +18,9 @@ public class NetworkStuff implements Runnable{
   boolean stop = false;
 
   Socket crox;
-  public NetworkStuff(){
+  public NetworkStuff(String ip, int port){
 
-    init("localhost",9999);
+    init(ip,port);
 
   }
 
