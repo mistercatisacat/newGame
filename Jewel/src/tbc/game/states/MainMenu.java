@@ -17,7 +17,7 @@ import tbc.game.entities.PlayerEntitity;
 
 public class MainMenu extends BasicGameState{
 
-	ImageLoader load = new ImageLoader("assets/");
+	ImageLoader load;
 	Image test;
 	Input input;
 	static NetworkStuff net;
@@ -25,10 +25,16 @@ public class MainMenu extends BasicGameState{
 	String ip;
 	int port;
 	PlayerEntitity play;
+	Image grass;
+	int x = 0;
+	int y = 0;
+	
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		play = new PlayerEntitity();
+		 load = new ImageLoader("assets/");
 		play.setSprite(load.getImage("rectangle"));
+		grass = load.getImage("grass");
 		
 	}
 
@@ -40,7 +46,9 @@ public class MainMenu extends BasicGameState{
 		arg2.drawString("Options", 0, 80);
 		arg2.drawString("press C to connect to server", 0, 120);
 		arg2.drawString("press X to exit", 0, 140);
-		play.getSprite().draw(play.getx(), play.gety());
+		grass.draw(x,y);
+		play.getSprite().draw(640/2, 480/2);
+		
 		
 	}
 
@@ -58,27 +66,20 @@ public class MainMenu extends BasicGameState{
 			arg0.exit();
 		}
 		if (arg0.getInput().isKeyDown(Input.KEY_S)){
-			play.sety(1);
-			System.out.println("x: " + play.getx());
-			System.out.println("y: " + play.gety());
+			y -=1;
 
 		}
 		if (arg0.getInput().isKeyDown(Input.KEY_W)){
-			play.sety(-1);
-			System.out.println("x: " + play.getx());
-			System.out.println("y: " + play.gety());
+			y +=1;
 
 		}
 		if (arg0.getInput().isKeyDown(Input.KEY_A)){
-			play.setx(-1);
-			System.out.println("x: " + play.getx());
-			System.out.println("y: " + play.gety());
+			x += 1;
+	
 
 		}
 		if (arg0.getInput().isKeyDown(Input.KEY_D)){
-			play.setx(1);
-			System.out.println("x: " + play.getx());
-			System.out.println("y: " + play.gety());
+			x -= 1;
 
 		}
 	}

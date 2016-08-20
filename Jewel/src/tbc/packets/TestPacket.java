@@ -7,7 +7,7 @@ public class TestPacket extends Packet{
 
 	@Override
 	public void onServer(JewelServer server, Jewel game) {
-		System.out.println("testPacket");
+		
 		server.sendPacket(0, this);
 		
 	}

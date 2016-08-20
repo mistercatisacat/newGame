@@ -42,7 +42,7 @@ public class JewelServer {
     int id = genID();
     clients.put(id, ci);
     ci.setID(id);
-    // Add to game world
+    
     // Send packets to everyone about the new client
   }
 
