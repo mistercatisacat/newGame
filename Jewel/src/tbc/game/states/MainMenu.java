@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import tbc.client.ImageLoader;
 import tbc.client.NetworkStuff;
+import tbc.game.entities.PlayerEntitity;
 
 public class MainMenu extends BasicGameState{
 
@@ -23,21 +24,23 @@ public class MainMenu extends BasicGameState{
 	static Thread t;
 	String ip;
 	int port;
+	PlayerEntitity play;
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+		play = new PlayerEntitity();
+		play.setSprite(load.getImage("rectangle"));
 		
 	}
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		test = load.getImage("checker_small").getScaledCopy(640, 480);	
-		//test.draw(0, 0);
 		arg2.setColor(Color.red);
 		arg2.drawString("welcome to Jewel!!!", 0, 20);
 		arg2.drawString("Start", 0, 60);
 		arg2.drawString("Options", 0, 80);
 		arg2.drawString("press C to connect to server", 0, 120);
 		arg2.drawString("press X to exit", 0, 140);
+		play.getSprite().draw(play.getx(), play.gety());
 		
 	}
 
@@ -53,6 +56,30 @@ public class MainMenu extends BasicGameState{
 		if (arg0.getInput().isKeyDown(Input.KEY_X)){
 			net.stop();
 			arg0.exit();
+		}
+		if (arg0.getInput().isKeyDown(Input.KEY_S)){
+			play.sety(1);
+			System.out.println("x: " + play.getx());
+			System.out.println("y: " + play.gety());
+
+		}
+		if (arg0.getInput().isKeyDown(Input.KEY_W)){
+			play.sety(-1);
+			System.out.println("x: " + play.getx());
+			System.out.println("y: " + play.gety());
+
+		}
+		if (arg0.getInput().isKeyDown(Input.KEY_A)){
+			play.setx(-1);
+			System.out.println("x: " + play.getx());
+			System.out.println("y: " + play.gety());
+
+		}
+		if (arg0.getInput().isKeyDown(Input.KEY_D)){
+			play.setx(1);
+			System.out.println("x: " + play.getx());
+			System.out.println("y: " + play.gety());
+
 		}
 	}
 
