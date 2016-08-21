@@ -16,6 +16,7 @@ public class ClientInstance implements Runnable{
 
 	
 	JewelServer server;
+	boolean stop = false;
 	Socket soc;
 	ObjectOutputStream oos;
 	ObjectInputStream ois;
@@ -31,14 +32,15 @@ public class ClientInstance implements Runnable{
 	
 	@Override
 	public void run() {
+		while (!stop){
 		try{
 			init();
 			while(connected && server.running){
 				proccesPackets();
 			}			
 		}catch(IOException e){
-			e.printStackTrace();
 			System.err.println("Client failed! ");
+		}
 		}
 	}
 	
@@ -57,10 +59,13 @@ public class ClientInstance implements Runnable{
 			Packet in = (Packet) ois.readObject();
 			in.onServer(server, game);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(-1);
+			connected = false;
+			stop = true;
+			System.out.println("client #: " + id + " disconnected");
+			server.purge(id);
+			//System.exit(-1);
 		}
 	}
 	
@@ -70,5 +75,8 @@ public class ClientInstance implements Runnable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public boolean isConnected(){
+		return connected;
 	}
 }

@@ -13,6 +13,7 @@ import org.newdawn.slick.util.BufferedImageUtil;
 
 import tbc.game.Jewel;
 import tbc.game.World;
+import tbc.game.states.Game;
 import tbc.game.states.MainMenu;
 
 public class JewelClient extends StateBasedGame {
@@ -35,8 +36,6 @@ public class JewelClient extends StateBasedGame {
   public static void main(String args[]) {
     // start thread to receive packets at all time
     world = new World();
-
-    // startNetThread();
     try {
       AppGameContainer app =
           new AppGameContainer(new JewelClient("Jewel v" + VERSION));
@@ -57,5 +56,6 @@ public class JewelClient extends StateBasedGame {
   @Override
   public void initStatesList(GameContainer arg0) throws SlickException {
     this.addState(new MainMenu());
+
   }
 }

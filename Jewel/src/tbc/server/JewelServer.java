@@ -30,6 +30,7 @@ public class JewelServer {
         Socket cliSoc = server.accept();
         ClientInstance ci = new ClientInstance(this, game, cliSoc);
         System.out.println("starting thread");
+        
         (new Thread(ci)).start();
       }
     } catch (IOException e) {
@@ -60,6 +61,7 @@ public class JewelServer {
       ci = clients.get(clientID);
     }
     ci.sendPacket(p);
+    
   }
 
   public synchronized void broadcastPacket(Packet p) {
@@ -67,4 +69,8 @@ public class JewelServer {
       client.sendPacket((p));
     }
   }
+  public void purge(int id){
+ clients.remove(id);
+ System.out.println("purging client #: " + id);
+	  }
 }
