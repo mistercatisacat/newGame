@@ -13,10 +13,19 @@ public abstract class Entity {
 	private Image sprite;
 	
 	public Entity(Point p, int id, String spriteName){
-		this.sprite = Game.imLoad.getImage(spriteName);
+		this.sprite = Game.imLoad.getImage(spriteName).copy();
 		this.x = p.getX();
 		this.y = p.getY();
 		vx = vy = 0;
+		this.id = id;
+	}
+	
+	public Entity(Point p, int vx, int vy, int id, String spriteName){
+		this.sprite = Game.imLoad.getImage(spriteName);
+		this.x = p.getX();
+		this.y = p.getY();
+		this.vx = vx;
+		this.vy = vy;
 		this.id = id;
 	}
 

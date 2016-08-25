@@ -24,4 +24,6 @@ public class ExitPacket extends Packet{
 		client.exit();
 	}
 	
+	
+	
 }

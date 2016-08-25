@@ -27,7 +27,7 @@ public class JewelClient extends StateBasedGame {
   public static final int FPS = 60;
   public static final double VERSION = 1.0;
   static boolean runnung = true;
-  static NetworkStuff net;
+  
   static World world;
   static ImageLoader load;
   Image back;

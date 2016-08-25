@@ -10,6 +10,7 @@ import java.net.Socket;
 import javax.sql.rowset.spi.SyncResolver;
 
 import tbc.game.Jewel;
+import tbc.game.World;
 import tbc.packets.Packet;
 
 public class ClientInstance implements Runnable {
@@ -17,13 +18,15 @@ public class ClientInstance implements Runnable {
 	JewelServer server;
 	boolean stop = false;
 	Socket soc;
+	private World world;
 	ObjectOutputStream oos;
 	ObjectInputStream ois;
 	int id;
 	boolean connected = true;
 	Jewel game;
 
-	public ClientInstance(JewelServer server, Jewel game, Socket cliSoc) {
+	public ClientInstance(JewelServer server, Jewel game, Socket cliSoc, World world) {
+		this.world = world;
 		this.server = server;
 		soc = cliSoc;
 		this.game = game;

@@ -17,13 +17,10 @@ public class NetworkStuff implements Runnable {
 	ObjectOutputStream os;
 	Jewel game;
 	boolean stop = false;
-
 	Socket crox;
 
 	public NetworkStuff(String ip, int port) {
-
 		init(ip, port);
-
 	}
 
 	public void run() {
@@ -86,7 +83,6 @@ public class NetworkStuff implements Runnable {
 			try {
 				Packet in = (Packet) is.readObject();
 				in.onClient(this, game);
-
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				System.out.println("couldnt connect to server");

@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.HashMap;
 
 import tbc.game.Jewel;
+import tbc.game.World;
 import tbc.packets.ExitPacket;
 import tbc.packets.Packet;
 
@@ -15,6 +16,7 @@ public class JewelServer {
 	ServerSocket server;
 	boolean running = true;
 	Jewel game;
+	public World gameWorld;
 
 	public static void main(String[] args) {
 		new JewelServer();
@@ -28,9 +30,8 @@ public class JewelServer {
 			while (running) {
 				System.out.println("wating for client");
 				Socket cliSoc = server.accept();
-				ClientInstance ci = new ClientInstance(this, game, cliSoc);
+				ClientInstance ci = new ClientInstance(this, game, cliSoc, gameWorld);
 				System.out.println("starting thread");
-
 				(new Thread(ci)).start();
 			}
 		} catch (IOException e) {
@@ -61,7 +62,6 @@ public class JewelServer {
 			ci = clients.get(clientID);
 		}
 		ci.sendPacket(p);
-
 	}
 
 	public synchronized void broadcastPacket(Packet p) {

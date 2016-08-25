@@ -34,6 +34,10 @@ public class PlayerEntitity extends Entity{
 			setVelocity(getVx() + 1, getVy());
 		}
 		updatePos();
-	}	
+	}
+	
+	public EntityOtherPlayer toOtherPlayer(int id){
+		return new EntityOtherPlayer(getX(), getY(), getVx(), getVy(), id);
+	}
 
 }
