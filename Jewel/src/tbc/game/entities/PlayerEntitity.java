@@ -6,14 +6,15 @@ import org.newdawn.slick.Input;
 
 import tbc.client.ImageLoader;
 import tbc.util.InputConfig;
+import tbc.util.Point;
 
 public class PlayerEntitity extends Entity{
 	
 	private Input keyboard;
 	Image sprite;
 	
-	public PlayerEntitity(Input keyboard, int x, int y, int id){
-		super(x,y,id);
+	public PlayerEntitity(Input keyboard, Point p, int id){
+		super(p, id, "rectangle");
 		this.keyboard = keyboard;
 	}
 	
@@ -21,7 +22,7 @@ public class PlayerEntitity extends Entity{
 	public void onTick(){
 		setVelocity(0, 0);
 		if (keyboard.isKeyDown(InputConfig.getKey("UP"))){
-			setVelocity(getVx() + 1, getVy());
+			setVelocity(getVx(), getVy() - 1);
 		}
 		if (keyboard.isKeyDown(InputConfig.getKey("DOWN"))){
 			setVelocity(getVx(), getVx() + 1);

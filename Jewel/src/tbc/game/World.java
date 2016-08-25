@@ -13,8 +13,8 @@ import tbc.util.Rectangle;
 import tbc.game.collision.StandardBox;
 
 public class World {
-  private HashMap<Integer, Entity> entityList = new HashMap<Integer, Entity>();
-  private LinkedList entityToSpawn = new LinkedList<>
+  private List<Entity> entityList = new ArrayList<Entity>();
+  private LinkedList entityToSpawn = new LinkedList<Entity>();
   private HashSet<Point> allBoxes = new HashSet<Point>();
 
   public Entity getEntity(int x) {
@@ -22,13 +22,19 @@ public class World {
 
   }
 
-  synchronized public void addEntity(int key, Entity value) {
-    entityList.put(key, value);
+  synchronized public void addEntity(Entity ent) {
+    entityList.add(ent);
+  }
+  
+  synchronized public void renderAll(){
+	  for (Entity e: entityList){
+		  e.getSprite().draw(e.getX(), e.getY());
+	  }
   }
   
   synchronized public void tick(){
-	  for (Entity e : entityList){
-		  
+	  for (Entity e: entityList){
+		  e.onTick();
 	  }
   }
 

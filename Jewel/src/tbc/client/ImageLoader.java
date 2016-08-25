@@ -20,13 +20,10 @@ public class ImageLoader {
 			try {
 				image = new Image(imagesDirectory + imgs[i]);
 			} catch (SlickException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if (imgs[i].toLowerCase().endsWith("gif")) {
 				imgs[i] = imgs[i].substring(0, imgs[i].indexOf('.'));
-
-				
 					images.put(imgs[i], image);
 			}
 		}

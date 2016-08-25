@@ -11,26 +11,31 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import tbc.client.ImageLoader;
 import tbc.client.NetworkStuff;
+import tbc.game.World;
 import tbc.game.entities.PlayerEntitity;
+import tbc.util.Point;
 
 
 
 public class Game extends BasicGameState{
+	
+	public static NetworkStuff net;
+	public static ImageLoader imLoad = new ImageLoader("assets/");
+	
 	String ip;
 	int port;
-	public static NetworkStuff net;
 	static Thread t;
 	PlayerEntitity play;
-	ImageLoader load;
+	
 	World world;
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		 
+		world = new World();
+		Point center = new Point(container.getWidth() / 2, container.getHeight() / 2);
 		ip = JOptionPane.showInputDialog("please input ip");
 		port = Integer.parseInt(JOptionPane.showInputDialog("please input port"));
 		startNetThread(ip, port);
-		play = new PlayerEntitity();
-		load = new ImageLoader("assets/");
-		play.setSprite(load.getImage("rectangle"));
+		play = new PlayerEntitity(container.getInput(), center, 5);
+		world.addEntity(play);
 		super.enter(container, game);
 	}
 	@Override
@@ -43,7 +48,7 @@ public class Game extends BasicGameState{
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-	play.getSprite().draw(play.getx(), play.gety());
+		play.getSprite().draw(play.getX(), play.getY());
 	}
 
 	@Override
@@ -55,10 +60,9 @@ public class Game extends BasicGameState{
 		world.tick();
 
 	}
-
+	
 	@Override
 	public int getID() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 	public static void startNetThread(String ip, int port) {
