@@ -48,7 +48,7 @@ public class Game extends BasicGameState{
 
 	@Override
 	public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException {
-		play.getSprite().draw(play.getX(), play.getY());
+		world.renderAll();
 	}
 
 	@Override
