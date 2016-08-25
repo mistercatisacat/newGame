@@ -5,13 +5,7 @@ import org.newdawn.slick.Image;
 public class OtherPlayerEntity implements Entity{
 
 	@Override
-	public void setx(int x) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void sety(int y) {
+	public void setVelocity(int x, int y) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -20,6 +14,10 @@ public class OtherPlayerEntity implements Entity{
 	public int getx() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public void onTick(){
+		
 	}
 
 	@Override

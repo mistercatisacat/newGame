@@ -47,27 +47,7 @@ public class Game extends BasicGameState{
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		if (arg0.getInput().isKeyDown(Input.KEY_X)){
-			net.stop();
-			arg0.exit();
-
-		}
-		if (arg0.getInput().isKeyDown(Input.KEY_W)){
-			play.sety(-1);
-
-		}
-		if (arg0.getInput().isKeyDown(Input.KEY_S)){
-			play.sety(1);
-
-		}
-		if (arg0.getInput().isKeyDown(Input.KEY_A)){
-			play.setx(-1);
-
-		}
-		if (arg0.getInput().isKeyDown(Input.KEY_D)){
-			play.setx(1);
-
-		}
+		
 
 	}
 
