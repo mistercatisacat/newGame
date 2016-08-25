@@ -6,71 +6,73 @@ import java.net.Socket;
 import java.util.HashMap;
 
 import tbc.game.Jewel;
+import tbc.packets.ExitPacket;
 import tbc.packets.Packet;
 
 public class JewelServer {
 
-  HashMap<Integer, ClientInstance> clients =
-      new HashMap<Integer, ClientInstance>();
-  ServerSocket server;
-  boolean running = true;
-  Jewel game;
+	HashMap<Integer, ClientInstance> clients = new HashMap<Integer, ClientInstance>();
+	ServerSocket server;
+	boolean running = true;
+	Jewel game;
 
-  public static void main(String[] args) {
-    new JewelServer();
-  }
+	public static void main(String[] args) {
+		new JewelServer();
+	}
 
-  public JewelServer() {
-    game = new Jewel();
-    try {
-      System.out.println("starting...");
-      server = new ServerSocket(9999);
-      while (running) {
-        System.out.println("wating for client");
-        Socket cliSoc = server.accept();
-        ClientInstance ci = new ClientInstance(this, game, cliSoc);
-        System.out.println("starting thread");
-        
-        (new Thread(ci)).start();
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+	public JewelServer() {
+		game = new Jewel();
+		try {
+			System.out.println("starting...");
+			server = new ServerSocket(9999);
+			while (running) {
+				System.out.println("wating for client");
+				Socket cliSoc = server.accept();
+				ClientInstance ci = new ClientInstance(this, game, cliSoc);
+				System.out.println("starting thread");
 
-  }
+				(new Thread(ci)).start();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-  synchronized void addClient(ClientInstance ci) {
-    int id = genID();
-    clients.put(id, ci);
-    ci.setID(id);
-    
-    // Send packets to everyone about the new client
-  }
+	}
 
-  private int genID() {
-    int id = 0;
-    while (clients.containsKey(id)) {
-      id++;
-    }
-    return id;
-  }
+	synchronized void addClient(ClientInstance ci) {
+		int id = genID();
+		clients.put(id, ci);
+		ci.setID(id);
 
-  public void sendPacket(int clientID, Packet p) {
-    ClientInstance ci;
-    synchronized (this) {
-      ci = clients.get(clientID);
-    }
-    ci.sendPacket(p);
-    
-  }
+		// Send packets to everyone about the new client
+	}
 
-  public synchronized void broadcastPacket(Packet p) {
-    for (ClientInstance client : clients.values()) {
-      client.sendPacket((p));
-    }
-  }
-  public void purge(int id){
- clients.remove(id);
- System.out.println("purging client #: " + id);
-	  }
+	private int genID() {
+		int id = 0;
+		while (clients.containsKey(id)) {
+			id++;
+		}
+		return id;
+	}
+
+	public void sendPacket(int clientID, Packet p) {
+		ClientInstance ci;
+		synchronized (this) {
+			ci = clients.get(clientID);
+		}
+		ci.sendPacket(p);
+
+	}
+
+	public synchronized void broadcastPacket(Packet p) {
+		for (ClientInstance client : clients.values()) {
+			client.sendPacket((p));
+		}
+	}
+
+	public synchronized void purge(int id) {
+		sendPacket(id, new ExitPacket());
+		clients.remove(id).stop();		
+		System.out.println("purging client #: " + id);
+	}
 }

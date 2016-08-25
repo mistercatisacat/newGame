@@ -1,11 +1,7 @@
 package tbc.client;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
-
-import javax.imageio.ImageIO;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;

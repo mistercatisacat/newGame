@@ -18,14 +18,14 @@ import tbc.game.entities.PlayerEntitity;
 public class Game extends BasicGameState{
 	String ip;
 	int port;
-	static NetworkStuff net;
+	public static NetworkStuff net;
 	static Thread t;
 	PlayerEntitity play;
 	ImageLoader load;
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		JOptionPane connect = new JOptionPane();
-		ip = connect.showInputDialog("please input ip");
-		port = Integer.parseInt(connect.showInputDialog("please input port"));
+		 
+		ip = JOptionPane.showInputDialog("please input ip");
+		port = Integer.parseInt(JOptionPane.showInputDialog("please input port"));
 		startNetThread(ip, port);
 		play = new PlayerEntitity();
 		load = new ImageLoader("assets/");

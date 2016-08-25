@@ -18,8 +18,7 @@ import tbc.game.states.MainMenu;
 
 public class JewelClient extends StateBasedGame {
   public JewelClient(String title) {
-    super(title);
-    // TODO Auto-generated constructor stub
+    super(title);    
   }
 
   static Thread t;
@@ -42,12 +41,14 @@ public class JewelClient extends StateBasedGame {
       app.setDisplayMode(WIDTH, HEIGHT, false);
       app.setTargetFrameRate(FPS);
       app.setShowFPS(true);
+      app.setForceExit(false);
+      System.out.println("app stargin....");
       app.start();
     } catch (SlickException e) {
       e.printStackTrace();
     }
-    
-    net.stop();
+   
+    Game.net.stop();
     System.exit(0);
   }
 
