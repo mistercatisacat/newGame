@@ -7,67 +7,32 @@ import org.newdawn.slick.Input;
 import tbc.client.ImageLoader;
 import tbc.util.InputConfig;
 
-public class PlayerEntitity implements Entity{
-	public int x, y, vx, vy; 
+public class PlayerEntitity extends Entity{
+	
 	private Input keyboard;
 	Image sprite;
 	
-	public PlayerEntitity(Input keyboard, int x, int y){
-		this.x = x;
-		this.y = y;
-		vx = vy = 0;
+	public PlayerEntitity(Input keyboard, int x, int y, int id){
+		super(x,y,id);
 		this.keyboard = keyboard;
 	}
-
-	@Override
-	public void setVelocity(int x, int y) {
-		this.vy +=y;
-		this.vx +=x;
-	}
-
-	@Override
-	public int getx() {
-		return x;
-		
-	}
-
-	@Override
-	public int gety() {
-		return y;
-	}
-
-	@Override
-	public Image getSprite() {
-		return sprite;
-	}
-
-	@Override
-	public void setSprite(Image sprite) {
-		this.sprite  = sprite; 
-	}
+	
 	
 	public void onTick(){
-		
-		
-		if (keyboard.isKeyDown(InputConfig.getKey("Forward"))){
-			setVelocity(vx, vy);
-
+		setVelocity(0, 0);
+		if (keyboard.isKeyDown(InputConfig.getKey("UP"))){
+			setVelocity(getVx() + 1, getVy());
 		}
-		if (keyboard.isKeyDown(Input.KEY_S)){
-			play.sety(1);
-
+		if (keyboard.isKeyDown(InputConfig.getKey("DOWN"))){
+			setVelocity(getVx(), getVx() + 1);
 		}
-		if (keyboard.isKeyDown(Input.KEY_A)){
-			play.setx(-1);
-
+		if (keyboard.isKeyDown(InputConfig.getKey("LEFT"))){
+			setVelocity(getVx() - 1, getVy());
 		}
-		if (keybord.isKeyDown(Input.KEY_D)){
-			play.setx(1);
-
+		if (keyboard.isKeyDown(InputConfig.getKey("RIGHT"))){
+			setVelocity(getVx() + 1, getVy());
 		}
-		
-	}
-
-
+		updatePos();
+	}	
 
 }

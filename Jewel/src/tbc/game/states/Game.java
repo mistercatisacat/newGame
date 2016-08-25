@@ -22,6 +22,7 @@ public class Game extends BasicGameState{
 	static Thread t;
 	PlayerEntitity play;
 	ImageLoader load;
+	World world;
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		 
 		ip = JOptionPane.showInputDialog("please input ip");
@@ -47,7 +48,11 @@ public class Game extends BasicGameState{
 
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		
+		if (arg0.getInput().isKeyDown(Input.KEY_X)){
+			net.stop();
+			arg0.exit();
+		}
+		world.tick();
 
 	}
 
