@@ -7,20 +7,21 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import tbc.game.Jewel;
-import tbc.packets.ExitPacket;
+import tbc.packets.PacketExit;
+import tbc.game.states.Game;
 import tbc.packets.Packet;
 import tbc.packets.TestPacket;
 
 public class NetworkStuff implements Runnable {
 	ObjectInputStream is;
 	ObjectOutputStream os;
-	Jewel game;
 	boolean stop = false;
 	Socket crox;
+	Game game;
 
-	public NetworkStuff(String ip, int port) {
+	public NetworkStuff(String ip, int port,Game game) {
 		init(ip, port);
+		this.game = game;
 	}
 
 	public void run() {
@@ -30,24 +31,16 @@ public class NetworkStuff implements Runnable {
 
 	}
 
-	public void init(String string, int port) {
+	private void init(String string, int port) {
 		try {
 			crox = new Socket(string, port);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("couldnt connect to server");
-		}
-		try {
 			is = new ObjectInputStream(crox.getInputStream());
-		} catch (IOException e) {
-			System.out.println("couldnt connect to server");
-		}
-		try {
 			os = new ObjectOutputStream(crox.getOutputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("couldnt connect to server");
-		}
+			stop();
+		}		
 		TestPacket cat = new TestPacket();
 		sendPacket(cat);
 
@@ -67,7 +60,7 @@ public class NetworkStuff implements Runnable {
 	public void stop() {
 		stop = true;
 		System.out.println("exiting game....");
-		Packet exit = new ExitPacket();
+		Packet exit = new PacketExit();
 		sendPacket(exit);
 		// Wait a while and if it doesn't receive the exit packet exit anyways
 		try {

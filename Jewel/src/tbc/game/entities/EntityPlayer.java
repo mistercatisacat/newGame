@@ -8,19 +8,22 @@ import tbc.client.ImageLoader;
 import tbc.util.InputConfig;
 import tbc.util.Point;
 
-public class PlayerEntitity extends Entity{
+public class EntityPlayer extends Entity{
 	
 	private Input keyboard;
 	Image sprite;
 	
-	public PlayerEntitity(Input keyboard, Point p, int id){
+	public EntityPlayer(Input keyboard, Point p, int id){
 		super(p, id, "rectangle");
 		this.keyboard = keyboard;
+		System.out.println("constructed!");
 	}
 	
 	
 	public void onTick(){
+		System.out.println("player tick +  " + this);
 		setVelocity(0, 0);
+		
 		if (keyboard.isKeyDown(InputConfig.getKey("UP"))){
 			setVelocity(getVx(), getVy() - 1);
 		}
@@ -35,9 +38,14 @@ public class PlayerEntitity extends Entity{
 		}
 		updatePos();
 	}
-	
-	public EntityOtherPlayer toOtherPlayer(int id){
-		return new EntityOtherPlayer(getX(), getY(), getVx(), getVy(), id);
+	@Override
+	public void loadImage() {
+		System.out.println("loaded image for player!");
+		super.loadImage();
+	}
+		
+	public EntityOtherPlayer toOtherPlayer(){
+		return new EntityOtherPlayer(getX(), getY(), getVx(), getVy(), getID());
 	}
 
 }

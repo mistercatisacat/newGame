@@ -9,27 +9,28 @@ import java.net.Socket;
 
 import javax.sql.rowset.spi.SyncResolver;
 
-import tbc.game.Jewel;
 import tbc.game.World;
 import tbc.packets.Packet;
 
 public class ClientInstance implements Runnable {
 
-	JewelServer server;
+	private JewelServer server;
 	boolean stop = false;
-	Socket soc;
+	private Socket soc;
 	private World world;
-	ObjectOutputStream oos;
-	ObjectInputStream ois;
-	int id;
+	private ObjectOutputStream oos;
+	private ObjectInputStream ois;
+	private int id;
 	boolean connected = true;
-	Jewel game;
+	private ServerGame game;
 
-	public ClientInstance(JewelServer server, Jewel game, Socket cliSoc, World world) {
+	public ClientInstance(JewelServer server, ServerGame game, Socket cliSoc,
+			World world) {
 		this.world = world;
 		this.server = server;
 		soc = cliSoc;
 		this.game = game;
+		this.id = id;
 	}
 
 	@Override
@@ -63,14 +64,15 @@ public class ClientInstance implements Runnable {
 		} catch (ClassNotFoundException e) {
 			// e.printStackTrace();
 		} catch (IOException e) {
-			System.out.println("client #: " + id + " disconnected with an error");
+			System.out
+					.println("client #: " + id + " disconnected with an error");
 			e.printStackTrace();
 			server.purge(id);
 			// System.exit(-1);
 		}
 	}
-	
-	protected void stop(){
+
+	protected void stop() {
 		stop = true;
 		connected = false;
 	}

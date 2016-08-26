@@ -1,19 +1,25 @@
 package tbc.game.entities;
 
+import java.io.Serializable;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 import tbc.game.states.Game;
+import tbc.server.ServerGame;
 import tbc.util.InputConfig;
 import tbc.util.Point;
 
-public abstract class Entity {
+public abstract class Entity implements Serializable{
 	
-	private int x, y, vx, vy, id; 	
+
+	private static final long serialVersionUID = -4559998615674348779L;
+	private int x, y, vx, vy, id;
+	private String spriteName;
 	private Image sprite;
 	
 	public Entity(Point p, int id, String spriteName){
-		this.sprite = Game.imLoad.getImage(spriteName).copy();
+		this.spriteName = spriteName;
 		this.x = p.getX();
 		this.y = p.getY();
 		vx = vy = 0;
@@ -21,7 +27,7 @@ public abstract class Entity {
 	}
 	
 	public Entity(Point p, int vx, int vy, int id, String spriteName){
-		this.sprite = Game.imLoad.getImage(spriteName);
+		this.spriteName = spriteName;
 		this.x = p.getX();
 		this.y = p.getY();
 		this.vx = vx;
@@ -45,8 +51,12 @@ public abstract class Entity {
 	}
 	
 	public void updatePos(){
+		int px = x;
+		int py = y;
 		x += vx;
 		y += vy;
+		//check collision
+		
 	}
 
 	public int getX() {
@@ -66,8 +76,16 @@ public abstract class Entity {
 		updatePos();
 	}
 	
-
-
-
+	public void onServerTick(ServerGame game){
+		updatePos();
+	}
+	
+	public int getID(){
+		return id;
+	}
+	
+	public void loadImage(){
+		sprite = Game.imLoad.getImage(spriteName).copy();
+	}
 	
 }

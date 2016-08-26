@@ -13,10 +13,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import tbc.client.ImageLoader;
 import tbc.client.NetworkStuff;
-import tbc.game.entities.PlayerEntitity;
+import tbc.game.entities.EntityPlayer;
 
 public class MainMenu extends BasicGameState{
 
+	public final static int STATE_ID = 0;
+	
 	ImageLoader load;
 	Image test;
 	Input input;
@@ -44,18 +46,16 @@ public class MainMenu extends BasicGameState{
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
 		if (arg0.getInput().isKeyDown(Input.KEY_X)){
 			arg0.exit();
-			
 		}
 		if (arg0.getInput().isKeyDown(Input.KEY_E)){
-			arg1.addState(new Game());
-			arg1.enterState(new Game().getID());
+			arg1.enterState(Game.STATE_ID);
 		}
 	}
 
 	@Override
 	public int getID() {
 		// TODO Auto-generated method stub
-		return 0;
+		return STATE_ID;
 	}
 
 

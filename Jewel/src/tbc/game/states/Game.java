@@ -9,34 +9,40 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import tbc.game.entities.Entity;
+
 import tbc.client.ImageLoader;
 import tbc.client.NetworkStuff;
 import tbc.game.World;
-import tbc.game.entities.PlayerEntitity;
+import tbc.game.entities.EntityPlayer;
 import tbc.util.Point;
 
 
 
 public class Game extends BasicGameState{
 	
-	public static NetworkStuff net;
+	
+	public final static int STATE_ID = 1;
+	
+	private NetworkStuff net;
 	public static ImageLoader imLoad = new ImageLoader("assets/");
 	
 	String ip;
 	int port;
 	static Thread t;
-	PlayerEntitity play;
+	private EntityPlayer play;	
+	private World world;
 	
-	World world;
+	
+
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		world = new World();
 		Point center = new Point(container.getWidth() / 2, container.getHeight() / 2);
-		ip = JOptionPane.showInputDialog("please input ip");
-		port = Integer.parseInt(JOptionPane.showInputDialog("please input port"));
-		startNetThread(ip, port);
-		play = new PlayerEntitity(container.getInput(), center, 5);
-		world.addEntity(play);
+		ip = JOptionPane.showInputDialog("please input ip","localhost");
+		port = Integer.parseInt(JOptionPane.showInputDialog("please input port",9999));
+		startNetThread(ip, port);			
 		super.enter(container, game);
+		world.loadAll();
 	}
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
@@ -60,14 +66,21 @@ public class Game extends BasicGameState{
 	
 	@Override
 	public int getID() {
-		return 1;
+		return STATE_ID;
 	}
-	public static void startNetThread(String ip, int port) {
-		net = new NetworkStuff(ip, port);
+	
+	private void startNetThread(String ip, int port) {
+		net = new NetworkStuff(ip, port, this);
 		t = new Thread(net);
 		t.start();
-
-
+	}
+	
+	public void addEntity(Entity e){
+		world.addEntity(e);
+	}
+	
+	public void removeEntity(int id){
+		world.removeEntity(id);
 	}
 
 }
