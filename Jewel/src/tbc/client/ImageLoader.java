@@ -1,7 +1,10 @@
 package tbc.client;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -12,6 +15,7 @@ public class ImageLoader {
 	private HashMap<String, Image> images = new HashMap<String, Image>();
 
 	public ImageLoader(String imagesDirectory) {
+		List<String> formats = Arrays.asList("gif", "png", "bmp");
 		File dir = new File(imagesDirectory);
 		String[] imgs = dir.list();
 		System.out.println("does " + imagesDirectory + " exist? "+dir.exists());
@@ -22,7 +26,9 @@ public class ImageLoader {
 			} catch (SlickException e) {
 				e.printStackTrace();
 			}
-			if (imgs[i].toLowerCase().endsWith("gif")) {
+			
+			String exten = imgs[i].substring(imgs[i].indexOf('.') + 1);
+			if (formats.contains(exten)) {
 				imgs[i] = imgs[i].substring(0, imgs[i].indexOf('.'));
 					images.put(imgs[i], image);
 			}

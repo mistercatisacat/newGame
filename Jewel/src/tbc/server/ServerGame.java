@@ -94,4 +94,8 @@ public class ServerGame implements Runnable{
 		return server.genID();
 	}
 	
+	public World getWorld(){
+		return world;
+	}
+	
 }

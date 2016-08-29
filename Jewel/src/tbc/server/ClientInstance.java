@@ -11,6 +11,7 @@ import javax.sql.rowset.spi.SyncResolver;
 
 import tbc.game.World;
 import tbc.packets.Packet;
+import tbc.packets.PacketUpdateVelocity;
 
 public class ClientInstance implements Runnable {
 
@@ -61,14 +62,19 @@ public class ClientInstance implements Runnable {
 		try {
 			Packet in = (Packet) ois.readObject();
 			in.onServer(server, game, id);
+			response(in);
 		} catch (ClassNotFoundException e) {
-			// e.printStackTrace();
 		} catch (IOException e) {
 			System.out
 					.println("client #: " + id + " disconnected with an error");
 			e.printStackTrace();
 			server.purge(id);
 			// System.exit(-1);
+		}
+	}
+	public void response(Packet p){
+		if (p instanceof PacketUpdateVelocity){
+			server.broadcastPacket(p);;
 		}
 	}
 

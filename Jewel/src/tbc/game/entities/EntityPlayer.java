@@ -5,25 +5,38 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 import tbc.client.ImageLoader;
+import tbc.game.states.Game;
+import tbc.packets.PacketUpdateVelocity;
 import tbc.util.InputConfig;
 import tbc.util.Point;
+import tbc.util.Velocity;
 
 public class EntityPlayer extends Entity{
 	
-	private Input keyboard;
-	Image sprite;
+	public static final float IM_SCALE = .5F;
 	
-	public EntityPlayer(Input keyboard, Point p, int id){
-		super(p, id, "rectangle");
+	private Input keyboard;
+	private Game game;
+	
+	private EntityPlayer(Input keyboard, Point p, int id, Game game){
+		super(p, id, SpriteNames.PLAYER_SPRITE);
 		this.keyboard = keyboard;
+		this.game = game;
 		System.out.println("constructed!");
+	}
+	
+	public static EntityPlayer makeServerPlayer(Point spawn, int id){
+		return new EntityPlayer(null, spawn, id, null);
+	}
+	
+	public static EntityPlayer makeClientPlayer(Input keyboard, Point spawn, int id, Game g){
+		return new EntityPlayer(keyboard, spawn, id, g);
 	}
 	
 	
 	public void onTick(){
-		System.out.println("player tick +  " + this);
+		Velocity prev = new Velocity(vx, vy);
 		setVelocity(0, 0);
-		
 		if (keyboard.isKeyDown(InputConfig.getKey("UP"))){
 			setVelocity(getVx(), getVy() - 1);
 		}
@@ -36,14 +49,23 @@ public class EntityPlayer extends Entity{
 		if (keyboard.isKeyDown(InputConfig.getKey("RIGHT"))){
 			setVelocity(getVx() + 1, getVy());
 		}
+		if (!new Velocity(vx, vy).equals(prev)){
+			System.out.println("New player velocity: Client  " + getID() + " X: " + vx + "Y: " +  vy);
+			PacketUpdateVelocity update = new PacketUpdateVelocity(vx, vy, id, id);
+			game.getNetwork().sendPacket(update);
+		}
 		updatePos();
 	}
-	@Override
+
 	public void loadImage() {
 		System.out.println("loaded image for player!");
-		super.loadImage();
+		super.loadImage(IM_SCALE);
 	}
-		
+	
+	public EntityPlayer toClientPlayer(Game game){
+		return new EntityPlayer(game.getContainer().getInput(), new Point(x, y), this.id, game);
+	}
+	
 	public EntityOtherPlayer toOtherPlayer(){
 		return new EntityOtherPlayer(getX(), getY(), getVx(), getVy(), getID());
 	}

@@ -30,8 +30,8 @@ public class Game extends BasicGameState{
 	String ip;
 	int port;
 	static Thread t;
-	private EntityPlayer play;	
 	private World world;
+	private GameContainer gc;
 	
 	
 
@@ -40,12 +40,19 @@ public class Game extends BasicGameState{
 		Point center = new Point(container.getWidth() / 2, container.getHeight() / 2);
 		ip = JOptionPane.showInputDialog("please input ip","localhost");
 		port = Integer.parseInt(JOptionPane.showInputDialog("please input port",9999));
-		startNetThread(ip, port);			
-		super.enter(container, game);
+		gc = container;
+		startNetThread(ip, port);
+		while (!net.serverLoaded()){
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {}
+		}
 		world.loadAll();
+		super.enter(container, game);
 	}
+	
 	@Override
-	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
+	public void init(GameContainer container, StateBasedGame arg1) throws SlickException {
 		
 	}
 
@@ -75,12 +82,32 @@ public class Game extends BasicGameState{
 		t.start();
 	}
 	
+	public NetworkStuff getNetwork(){
+		return net;
+	}
+	
+	public void initPlayer(EntityPlayer pl){
+		EntityPlayer player = pl.toClientPlayer(this);
+		player.loadImage();
+		world.addEntity(player);
+		world.setPlayer(player);
+	}
+	
 	public void addEntity(Entity e){
+		e.loadImage();
 		world.addEntity(e);
 	}
 	
 	public void removeEntity(int id){
 		world.removeEntity(id);
+	}
+	
+	public GameContainer getContainer(){
+		return gc;
+	}
+	
+	public World getWorld(){
+		return world;
 	}
 
 }

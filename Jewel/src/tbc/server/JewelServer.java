@@ -12,6 +12,8 @@ import tbc.game.entities.EntityPlayer;
 import tbc.game.World;
 import tbc.packets.PacketExit;
 import tbc.packets.PacketNewEntity;
+import tbc.packets.PacketSendWorldInfo;
+import tbc.packets.PacketSpawnClientPlayer;
 import tbc.util.Point;
 import tbc.packets.Packet;
 
@@ -28,6 +30,9 @@ public class JewelServer {
 		new JewelServer();
 	}
 
+	/**
+	 * 
+	 */
 	public JewelServer() {
 		gameWorld = new World();
 		game = new ServerGame(this, gameWorld);
@@ -51,17 +56,19 @@ public class JewelServer {
 	synchronized void addClient(ClientInstance ci) {
 		int id = genID();
 		Point spawn = gameWorld.findPlayerSpawn();
-		EntityPlayer ep = new EntityPlayer(null, spawn, id);
+		EntityPlayer ep = EntityPlayer.makeServerPlayer(spawn, id);
 		
 		//Send packets to everyone about the new client
+		PacketSpawnClientPlayer ps = new PacketSpawnClientPlayer(ep);
 		PacketNewEntity pne = new PacketNewEntity(ep.toOtherPlayer());
-		broadcastPacket(pne);
+		PacketSendWorldInfo worldSnap = new PacketSendWorldInfo(gameWorld.allEntities());
 		
+		broadcastPacket(pne);
 		clients.put(id, ci);			
 		ci.setID(id);
-		game.addEntityServerOnly(ep);		
-		// 
-		
+		sendPacket(id, worldSnap);
+		sendPacket(id, ps);
+		game.addEntityServerOnly(ep);
 	}
 
 	public synchronized int genID() {

@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+
 import tbc.client.JewelClient;
 import tbc.game.collision.StandardBox;
 import tbc.game.entities.EntityPlayer;
@@ -20,9 +22,13 @@ public class World {
 	private HashSet<Point> allBoxes = new HashSet<Point>();
 	private EntityPlayer ep = null;
 
-	public Entity getEntity(int x) {
-		return entityList.get(x);
+	synchronized public Entity getEntity(int id) {
+		return entityList.get(id);
 
+	}
+	
+	synchronized public void setEntityVelocity(int vx, int vy, int id){
+		entityList.get(id).setVelocity(vx, vy);
 	}
 	
 	synchronized public void addEntity(Entity ent) {
@@ -76,5 +82,14 @@ public class World {
 	public Point findPlayerSpawn(){
 		return new Point((int)(Math.random()*JewelClient.WIDTH),(int) (Math.random()*JewelClient.HEIGHT));
 	}
-
+	
+	synchronized public Entity[] allEntities(){
+		Entity[] all = new Entity[entityList.size()];
+		int count = 0;
+		for (Entity e : entityList.values()){
+			all[count++] = e;
+		}
+		return all;
+	}
+	
 }

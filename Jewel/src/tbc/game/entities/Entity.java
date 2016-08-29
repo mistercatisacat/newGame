@@ -14,9 +14,10 @@ public abstract class Entity implements Serializable{
 	
 
 	private static final long serialVersionUID = -4559998615674348779L;
-	private int x, y, vx, vy, id;
-	private String spriteName;
-	private Image sprite;
+	protected int x, y, vx, vy, id;
+	protected Image sprite;
+	protected String spriteName;
+	
 	
 	public Entity(Point p, int id, String spriteName){
 		this.spriteName = spriteName;
@@ -82,6 +83,11 @@ public abstract class Entity implements Serializable{
 	
 	public int getID(){
 		return id;
+	}
+	
+	public void loadImage(float scale){
+		Image src = Game.imLoad.getImage(spriteName);
+		sprite = src.getScaledCopy(scale);
 	}
 	
 	public void loadImage(){

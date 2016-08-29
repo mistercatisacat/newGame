@@ -10,6 +10,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jar/slick-util.jar"/>
 	<classpathentry kind="lib" path="lib/jar/jinput.jar"/>
-	<classpathentry kind="lib" path="lib/jar/slick.jar" sourcepath="C:/Users/carll/Downloads/slick2d-master.zip"/>
+	<classpathentry kind="lib" path="lib/jar/slick.jar" sourcepath="C:/Users/lobugliops/Downloads/slick.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

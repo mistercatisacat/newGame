@@ -18,7 +18,7 @@ public abstract class Packet implements Serializable{
 	
 	public abstract void onServer(JewelServer server, ServerGame game,int senderID);
 	
-	public abstract void onClient(NetworkStuff client, Game Game);
+	public abstract void onClient(NetworkStuff client, Game game);
 	
 	
 }

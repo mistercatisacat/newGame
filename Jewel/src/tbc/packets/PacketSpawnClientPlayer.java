@@ -1,29 +1,28 @@
 package tbc.packets;
 
 import tbc.client.NetworkStuff;
-import tbc.game.entities.Entity;
+import tbc.game.entities.EntityPlayer;
 import tbc.game.states.Game;
 import tbc.server.JewelServer;
 import tbc.server.ServerGame;
 
-public class PacketNewEntity extends Packet{
+public class PacketSpawnClientPlayer extends Packet{
 	
-	private static final long serialVersionUID = 1510927589123891282L;
-	private Entity e;
-	private int id;
-	public PacketNewEntity(Entity e){
-		this.e = e;
-		this.id = e.getID();
+	private EntityPlayer pl;
+	public PacketSpawnClientPlayer(EntityPlayer pl) {
+		this.pl = pl;
 	}
 
 	@Override
 	public void onServer(JewelServer server, ServerGame game, int senderID) {
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onClient(NetworkStuff client, Game game) {
-		game.addEntity(e);
+		game.initPlayer(pl);
+		
 	}
 
 }
