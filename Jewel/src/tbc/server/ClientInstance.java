@@ -30,8 +30,7 @@ public class ClientInstance implements Runnable {
 		this.world = world;
 		this.server = server;
 		soc = cliSoc;
-		this.game = game;
-		this.id = id;
+		this.game = game;		
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public class ClientInstance implements Runnable {
 		try {
 			Packet in = (Packet) ois.readObject();
 			in.onServer(server, game, id);
-			response(in);
+			
 		} catch (ClassNotFoundException e) {
 		} catch (IOException e) {
 			System.out
@@ -73,12 +72,13 @@ public class ClientInstance implements Runnable {
 		}
 	}
 	
-	public void response(Packet p){
+	/*public void response(Packet p){
 		if (p instanceof PacketUpdateVelocity){
 			server.broadcastPacket(p);;
 		}
 	}
-
+*/
+	
 	protected void stop() {
 		stop = true;
 		connected = false;
@@ -94,5 +94,9 @@ public class ClientInstance implements Runnable {
 
 	public boolean isConnected() {
 		return connected;
+	}
+	
+	public int getID(){
+		return id;
 	}
 }

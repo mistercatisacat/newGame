@@ -22,7 +22,7 @@ public class PacketUpdateVelocity extends Packet implements Serializable {
 	public void onServer(JewelServer server, ServerGame game, int senderID) {
 		System.out.println("Server velocity update. Client:" + cid);
 		game.getWorld().setEntityVelocity(vx, vy, cid);
-		
+		server.broadcastPacketExceptTo(this, senderID);
 	}
 
 	@Override

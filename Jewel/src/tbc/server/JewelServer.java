@@ -6,6 +6,8 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import javax.sql.rowset.spi.SyncResolver;
+
 import tbc.game.entities.Entity;
 import tbc.game.entities.EntityOtherPlayer;
 import tbc.game.entities.EntityPlayer;
@@ -92,6 +94,14 @@ public class JewelServer {
 	public synchronized void broadcastPacket(Packet p) {
 		for (ClientInstance client : clients.values()) {
 			client.sendPacket((p));
+		}
+	}
+	
+	public synchronized void broadcastPacketExceptTo(Packet p, int cid){
+		for (ClientInstance client : clients.values()) {
+			if(client.getID() != cid){
+				client.sendPacket((p));
+			}
 		}
 	}
 

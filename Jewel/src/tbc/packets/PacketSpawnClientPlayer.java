@@ -8,6 +8,10 @@ import tbc.server.ServerGame;
 
 public class PacketSpawnClientPlayer extends Packet{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3734217446396755605L;
 	private EntityPlayer pl;
 	public PacketSpawnClientPlayer(EntityPlayer pl) {
 		this.pl = pl;
@@ -15,14 +19,12 @@ public class PacketSpawnClientPlayer extends Packet{
 
 	@Override
 	public void onServer(JewelServer server, ServerGame game, int senderID) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onClient(NetworkStuff client, Game game) {
-		game.initPlayer(pl);
-		
+		game.initPlayer(pl);		
 	}
 
 }
