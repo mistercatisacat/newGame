@@ -26,21 +26,21 @@ public class World {
 		return entityList.get(id);
 
 	}
-	
-	synchronized public void setEntityVelocity(int vx, int vy, int id){
+
+	synchronized public void setEntityVelocity(int vx, int vy, int id) {
 		entityList.get(id).setVelocity(vx, vy);
 	}
-	
+
 	synchronized public void addEntity(Entity ent) {
 		entityList.put(ent.getID(), ent);
 	}
-	
-	synchronized public void loadAll(){
+
+	synchronized public void loadAll() {
 		for (Entity e : entityList.values()) {
 			e.loadImage();
 		}
 	}
-	
+
 	synchronized public void renderAll() {
 		for (Entity e : entityList.values()) {
 			e.getSprite().draw(e.getX(), e.getY());
@@ -69,27 +69,29 @@ public class World {
 		return ep;
 	}
 
-	public synchronized void onServerTick(ServerGame serverGame) {		
+	public synchronized void onServerTick(ServerGame serverGame) {
 		for (Entity e : entityList.values()) {
 			e.onServerTick(serverGame);
 		}
 	}
-	
-	synchronized public void removeEntity(int id){
+
+	synchronized public void removeEntity(int id) {
 		entityList.remove(id);
 	}
-	
-	public Point findPlayerSpawn(){
-		return new Point((int)(Math.random()*JewelClient.WIDTH),(int) (Math.random()*JewelClient.HEIGHT));
+
+	public Point findPlayerSpawn() {
+		return new Point((int) (Math.random() * JewelClient.WIDTH),
+				(int) (Math.random() * JewelClient.HEIGHT));
 	}
-	
-	synchronized public Entity[] allEntities(){
-		Entity[] all = new Entity[entityList.size()];
-		int count = 0;
-		for (Entity e : entityList.values()){
-			all[count++] = e;
+
+	synchronized public Entity[] allEntities() {
+		Entity[] ents = new Entity[entityList.values().size()];
+		entityList.values().toArray(ents);
+		for (int i = 0; i < ents.length; i++) {
+			System.out.println(
+					"server x: " + ents[i].getX() + " y: " + ents[i].getY());
 		}
-		return all;
+		return ents;
 	}
-	
+
 }

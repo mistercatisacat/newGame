@@ -31,6 +31,7 @@ public class PacketSendWorldInfo extends Packet {
 		//At the moment, works via side effect. Will also send tile and other info
 		World w = game.getWorld();
 		for (Entity e : entities){
+			System.out.println("x: " + e.getX() + " y: " + e.getY());
 			Entity toAdd = e;
 			if (e instanceof EntityPlayer){
 				toAdd = ((EntityPlayer) e).toOtherPlayer();

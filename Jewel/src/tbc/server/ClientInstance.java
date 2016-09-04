@@ -72,6 +72,7 @@ public class ClientInstance implements Runnable {
 			// System.exit(-1);
 		}
 	}
+	
 	public void response(Packet p){
 		if (p instanceof PacketUpdateVelocity){
 			server.broadcastPacket(p);;

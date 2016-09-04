@@ -10,10 +10,9 @@ public class PacketNewEntity extends Packet{
 	
 	private static final long serialVersionUID = 1510927589123891282L;
 	private Entity e;
-	private int id;
+	
 	public PacketNewEntity(Entity e){
-		this.e = e;
-		this.id = e.getID();
+		this.e = e;		
 	}
 
 	@Override
