@@ -20,9 +20,10 @@ public class PacketExit extends Packet{
 	}
 
 	@Override
-	public void onClient(NetworkStuff client, Game Game) {
+	public void onClient(NetworkStuff client, Game game) {
 		System.out.println("exiting!");
 		client.exit();
+		game.exitGC();
 	}
 	
 	

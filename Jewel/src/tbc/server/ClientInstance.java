@@ -43,6 +43,7 @@ public class ClientInstance implements Runnable {
 				}
 			} catch (IOException e) {
 				System.err.println("Client failed! ");
+				e.printStackTrace();
 			}
 		}
 	}
@@ -67,8 +68,7 @@ public class ClientInstance implements Runnable {
 			System.out
 					.println("client #: " + id + " disconnected with an error");
 			e.printStackTrace();
-			server.purge(id);
-			// System.exit(-1);
+			server.purge(id);			
 		}
 	}
 	
@@ -99,4 +99,6 @@ public class ClientInstance implements Runnable {
 	public int getID(){
 		return id;
 	}
+	
+
 }

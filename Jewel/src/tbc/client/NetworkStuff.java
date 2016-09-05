@@ -29,10 +29,7 @@ public class NetworkStuff implements Runnable {
 	}
 
 	public void run() {
-		while (JewelClient.runnung) {
-			processPackets();
-		}
-
+		processPackets();
 	}
 
 	private void init(String string, int port) {
@@ -60,18 +57,10 @@ public class NetworkStuff implements Runnable {
 
 	}
 
-	public void stop() {
-		stop = true;
-		System.out.println("exiting game....");
+	public void stop() {		
+	//	System.out.println("exiting game....");
 		Packet exit = new PacketExit();
-		sendPacket(exit);
-		// Wait a while and if it doesn't receive the exit packet exit anyways
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
+		sendPacket(exit);		
 	}
 
 	public void processPackets() {
@@ -107,5 +96,6 @@ public class NetworkStuff implements Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		stop = true;
 	}
 }

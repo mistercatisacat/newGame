@@ -17,10 +17,8 @@ import tbc.game.states.MainMenu;
 
 public class JewelClient extends StateBasedGame {
 
-	
-
 	public JewelClient(String title) {
-		super(title);		
+		super(title);
 	}
 
 	static Thread t;
@@ -33,9 +31,8 @@ public class JewelClient extends StateBasedGame {
 	static ImageLoader load;
 	Image back;
 
-	private GameState mainMenu,game;
-	
-	
+	private GameState mainMenu, game;
+
 	public static void main(String args[]) {
 		// start thread to receive packets at all time
 
@@ -50,16 +47,25 @@ public class JewelClient extends StateBasedGame {
 			app.start();
 		} catch (SlickException e) {
 			e.printStackTrace();
-		}		
+		}
+	}
+
+	@Override
+	public boolean closeRequested() {
+		if (game != null){
+			((Game) game).close();
+		}
+	
+		return super.closeRequested();
 	}
 
 	@Override
 	public void initStatesList(GameContainer arg0) throws SlickException {
 		mainMenu = new MainMenu();
 		game = new Game();
-				
-		this.addState(mainMenu);		
+
+		this.addState(mainMenu);
 		this.addState(game);
-		
+
 	}
 }
