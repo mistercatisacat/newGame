@@ -38,6 +38,7 @@ public class JewelServer {
 	public JewelServer() {
 		gameWorld = new World();
 		game = new ServerGame(this, gameWorld);
+		(new Thread(game)).start();
 		try {
 			System.out.println("starting...");
 			server = new ServerSocket(9999);
