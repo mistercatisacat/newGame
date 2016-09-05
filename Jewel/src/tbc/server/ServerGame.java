@@ -98,4 +98,8 @@ public class ServerGame implements Runnable{
 		return world;
 	}
 	
+	public void broadcastPacket(Packet p){
+		server.broadcastPacket(p);
+	}
+	
 }

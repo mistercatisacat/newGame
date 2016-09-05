@@ -11,7 +11,7 @@ import javax.sql.rowset.spi.SyncResolver;
 
 import tbc.game.World;
 import tbc.packets.Packet;
-import tbc.packets.PacketUpdateVelocity;
+import tbc.packets.PacketUpdateEntity;
 
 public class ClientInstance implements Runnable {
 

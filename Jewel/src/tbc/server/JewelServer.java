@@ -14,6 +14,7 @@ import tbc.game.entities.EntityPlayer;
 import tbc.game.World;
 import tbc.packets.PacketExit;
 import tbc.packets.PacketNewEntity;
+import tbc.packets.PacketRemoveEntity;
 import tbc.packets.PacketSendWorldInfo;
 import tbc.packets.PacketSpawnClientPlayer;
 import tbc.util.Point;
@@ -106,16 +107,23 @@ public class JewelServer {
 		}
 	}
 
-	public synchronized void purge(int id) {
-		sendPacket(id, new PacketExit());
-		clients.remove(id).stop();
-		usedIDs.remove(id);
-		System.out.println("purging client #: " + id);
+	public synchronized void purge(int cid) {
+		System.out.println("purging client #: " + cid);
+		sendPacket(cid, new PacketExit());
+		clients.remove(cid).stop();
+		usedIDs.remove(cid);
+		removeEntityDirectly(cid);
+		
 	}
 
-	public synchronized void removeEntity(int id) {
-		// send packet to clients
-		clients.remove(id);
+	public void removeEntity(int id) {		
+		gameWorld.markForRemoval(id);
+	}
+	
+	public synchronized void removeEntityDirectly(int id){
+		PacketRemoveEntity pre = new PacketRemoveEntity(id);
+		broadcastPacket(pre);
+		gameWorld.removeEntity(id);
 	}
 
 	public synchronized void spawnEntity(Entity e) {

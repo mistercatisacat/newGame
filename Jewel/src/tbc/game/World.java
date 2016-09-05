@@ -3,6 +3,7 @@ package tbc.game;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 import tbc.client.JewelClient;
 import tbc.game.collision.StandardBox;
 import tbc.game.entities.EntityPlayer;
+import tbc.packets.Packet;
+import tbc.packets.PacketRemoveEntity;
 import tbc.game.entities.Entity;
 import tbc.server.ServerGame;
 import tbc.util.Point;
@@ -30,6 +33,11 @@ public class World {
 	synchronized public void setEntityVelocity(int vx, int vy, int id) {
 		entityList.get(id).setVelocity(vx, vy);
 	}
+	
+	synchronized public void setEntityPosition(int x, int y, int id) {
+		entityList.get(id).setLocation(x, y);
+	}
+	
 
 	synchronized public void addEntity(Entity ent) {
 		entityList.put(ent.getID(), ent);
@@ -70,13 +78,25 @@ public class World {
 	}
 
 	public synchronized void onServerTick(ServerGame serverGame) {
-		for (Entity e : entityList.values()) {
-			e.onServerTick(serverGame);
+		Iterator<Entity> it = entityList.values().iterator();
+		while(it.hasNext()){
+			Entity e = it.next();
+			if(e.toBeRemoved){
+				it.remove();
+				PacketRemoveEntity pre = new PacketRemoveEntity(e.getID());
+				serverGame.broadcastPacket(pre);
+			}else{
+				e.onServerTick(serverGame);
+			}
 		}
 	}
 
 	synchronized public void removeEntity(int id) {
 		entityList.remove(id);
+	}
+	
+	public synchronized void markForRemoval(int id){ 
+		entityList.get(id).toBeRemoved = true;
 	}
 
 	public Point findPlayerSpawn() {

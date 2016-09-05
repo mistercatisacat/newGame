@@ -17,6 +17,7 @@ public abstract class Entity implements Serializable{
 	protected int x, y, vx, vy, id;
 	protected Image sprite;
 	protected String spriteName;
+	public boolean toBeRemoved = false;
 	
 	
 	public Entity(Point p, int id, String spriteName){
@@ -41,6 +42,11 @@ public abstract class Entity implements Serializable{
 		this.vx = vx;
 		this.vy = vy;
 		
+	}
+	
+	public void setLocation(int x, int y){
+		this.x = x;
+		this.y = y;
 	}
 
 	public int getVx(){

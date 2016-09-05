@@ -6,7 +6,7 @@ import org.newdawn.slick.Input;
 
 import tbc.client.ImageLoader;
 import tbc.game.states.Game;
-import tbc.packets.PacketUpdateVelocity;
+import tbc.packets.PacketUpdateEntity;
 import tbc.util.InputConfig;
 import tbc.util.Point;
 import tbc.util.Velocity;
@@ -52,8 +52,7 @@ public class EntityPlayer extends Entity {
 		if (!new Velocity(vx, vy).equals(prev)) {
 			System.out.println("New player velocity: Client  " + getID()
 					+ " X: " + vx + "Y: " + vy);
-			PacketUpdateVelocity update = new PacketUpdateVelocity(vx, vy,
-					getID());
+			PacketUpdateEntity update = new PacketUpdateEntity(vx, vy, x, y, getID());
 			game.getNetwork().sendPacket(update);
 		}
 		updatePos();
